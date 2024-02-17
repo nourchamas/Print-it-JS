@@ -124,5 +124,121 @@
 	</div>
 </footer>
 <script src="./assets/script.js"></script>
+	<script>
+  var printShop = {
+    name: "Print it",
+    location: "Your City",
+    services: ["Brochures", "Business Cards", "Posters"],
+    contact: {
+      email: "info@printit.com",
+      phone: "+1 123-456-7890"
+    },
+    printDocument: function(document) {
+      console.log("Printing: " + document);
+    }
+  };
+
+  // Display information about the print shop
+  console.log("Welcome to " + printShop.name + "!");
+  console.log("We offer printing services for: " + printShop.services.join(", "));
+  console.log("Contact us at: Email - " + printShop.contact.email + ", Phone - " + printShop.contact.phone);
+
+  // Example of printing a document
+  printShop.printDocument("Flyers");
+
+  // Get the bullet container
+  var bulletContainer = document.getElementById("bulletContainer");
+
+  // Create and append bullets based on the number of slides
+  var numberOfSlides = document.getElementsByClassName("slide").length;
+  for (var i = 0; i < numberOfSlides; i++) {
+    var bullet = document.createElement("div");
+    bullet.classList.add("bullet");
+    bulletContainer.appendChild(bullet);
+  }
+
+  // Set the first bullet as active
+  var bullets = document.getElementsByClassName("bullet");
+  var currentSlideIndex = 0;
+  bullets[currentSlideIndex].classList.add("active-bullet");
+
+  // Event listener for the left arrow key
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "ArrowLeft") {
+      navigate("left");
+    }
+  });
+
+  // Event listener for the right arrow key
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "ArrowRight") {
+      navigate("right");
+    }
+  });
+
+  // Event listener for the left arrow button
+  var leftArrowButton = document.getElementById("leftArrow");
+  leftArrowButton.addEventListener("click", function() {
+    navigate("left");
+  });
+
+  // Event listener for the right arrow button
+  var rightArrowButton = document.getElementById("rightArrow");
+  rightArrowButton.addEventListener("click", function() {
+    navigate("right");
+  });
+
+  // Function to handle navigation (left or right)
+  function navigate(direction) {
+    // Update current slide index
+    if (direction === "left") {
+      currentSlideIndex = (currentSlideIndex - 1 + numberOfSlides) % numberOfSlides;
+    } else if (direction === "right") {
+      currentSlideIndex = (currentSlideIndex + 1) % numberOfSlides;
+    }
+
+    // Update bullet points
+    for (var i = 0; i < numberOfSlides; i++) {
+      bullets[i].classList.remove("active-bullet");
+    }
+    bullets[currentSlideIndex].classList.add("active-bullet");
+
+    // Update slide visibility
+    var slides = document.getElementsByClassName("slide");
+    for (var i = 0; i < numberOfSlides; i++) {
+      slides[i].classList.remove("active-slide");
+    }
+    slides[currentSlideIndex].classList.add("active-slide");
+
+    // Add your logic to update the image and text corresponding to the current slide
+    console.log("Navigated to slide " + (currentSlideIndex + 1));
+  }
+</script>
+
+<!-- HTML representation of the arrow buttons -->
+<button id="leftArrow">Left</button>
+<button id="rightArrow">Right</button>
+
+<!-- HTML representation of the slider -->
+<div id="slider">
+  <div class="slide active-slide">
+    <img src="image1.jpg" alt="Image 1">
+    <p>Text for Image 1</p>
+  </div>
+  <div class="slide">
+    <img src="image2.jpg" alt="Image 2">
+    <p>Text for Image 2</p>
+  </div>
+  <div class="slide">
+    <img src="image3.jpg" alt="Image 3">
+    <p>Text for Image 3</p>
+  </div>
+</div>
+
+<!-- Bullet points container -->
+<div id="bulletContainer"></div>
+
+</body>
+</html>
 </body>
 </html>
